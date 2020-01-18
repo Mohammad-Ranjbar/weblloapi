@@ -25,3 +25,8 @@ $router->post('/board', 'BoardController@store');
 $router->put('/board/{board}', 'BoardController@update');
 $router->delete('/board/{board}', 'BoardController@destroy');
 
+$router->get('/boards/{board}/list','ListController@index');
+$router->post('/boards/{board}/list','ListController@store');
+$router->get('/boards/{board}/list/{list}','ListController@show');
+$router->put('/boards/{board}/list/{list}','ListController@update');
+$router->delete('/boards/{board}/list/{list}','ListController@destroy');
