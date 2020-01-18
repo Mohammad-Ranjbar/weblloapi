@@ -31,10 +31,14 @@ class BoardController extends Controller
 
     public function update(Request $request, $boardId)
     {
-        $board = Board::query()->find($boardId);
+
+        // $this->validate($request,['name'=>'required']);
+
+        $board = Board::find($boardId);
         if (Auth::user()->id !== $board->user_id) {
-            response()->json(['status' => 'error', 'message' => 'unauthorize'], 401);
+            return response()->json(['status' => 'error', 'message' => 'unauthorized'], 401);
         }
+
         $board->update($request->all());
 
         return response()->json(['message' => 'success', 'board' => $board], 200);
@@ -55,14 +59,13 @@ class BoardController extends Controller
 
     public function index()
     {
-        return Auth::user()->boards();
+        return Auth::user()->boards()->get();
     }
 
     public function store(Request $request)
     {
-        Board::create([
+      Auth::user()->boards()->create([
             'name'    => $request->name,
-            'user_id' => Auth::id(),
         ]);
 
         return response()->json(['message' => 'success'], 200);
