@@ -17,3 +17,6 @@ $router->get('/', function () use ($router) {
 $router->get('/board', 'BoardController@index');
 $router->get('/board/{board}', 'BoardController@show');
 $router->post('/board', 'BoardController@store');
+$router->put('/board/{board}', 'BoardController@update');
+$router->delete('/board/{board}', 'BoardController@destroy');
+

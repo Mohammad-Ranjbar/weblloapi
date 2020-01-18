@@ -11,16 +11,17 @@ use Laravel\Lumen\Auth\Authorizable;
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'username',
+        'email',
+        'api_token',
+        'password',
     ];
-
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -29,4 +30,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    public function boards()
+    {
+        return $this->hasMany(Board::class);
+    }
 }
