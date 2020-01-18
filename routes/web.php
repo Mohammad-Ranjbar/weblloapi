@@ -15,9 +15,9 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$app->post('/login','AuthController@login');
-$app->get('/logout','AuthController@logout');
-$app->post('/register','AuthController@register');
+$router->post('/login','AuthController@login');
+$router->get('/logout','AuthController@logout');
+$router->post('/register','AuthController@register');
 
 $router->get('/board', 'BoardController@index');
 $router->get('/board/{board}', 'BoardController@show');

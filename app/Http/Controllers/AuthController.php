@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -24,7 +25,7 @@ class AuthController extends Controller
             'username'  => $request->username,
             'email'     => $request->email,
             'password'  => app('hash')->make($request->password),
-            'api_token' => str_random(50),
+            'api_token' => Str::random(50),
         ]);
 
         return response()->json(['status' => 'success', 'user' => $user], 200);
@@ -40,7 +41,7 @@ class AuthController extends Controller
 
         if (Hash::check($request->password, $user->password)){
 
-                $user->update(['api_token'=>str_random(50)]);
+                $user->update(['api_token'=>Str::random(50)]);
                 return response()->json(['status' => 'success', 'user' => $user], 200);
         }
 
@@ -50,10 +51,11 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        // dd($request->api_token);
         $api_token = $request->api_token;
 
         $user = User::where('api_token', $api_token)->first();
-
+        // dd($user);
         if (!$user) {
             return response()->json(['status' => 'error', 'message' => 'Not Logged in'], 401);
         }
